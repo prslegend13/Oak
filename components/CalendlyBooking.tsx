@@ -1,0 +1,21 @@
+'use client';
+import { useState } from 'react';
+const generalUrl = process.env.NEXT_PUBLIC_CALENDLY_URL || '';
+const halfDayUrl = process.env.NEXT_PUBLIC_CALENDLY_HALF_DAY_URL || '';
+const fullDayUrl = process.env.NEXT_PUBLIC_CALENDLY_FULL_DAY_URL || '';
+function isCalendlyUrl(value: string) {
+  try { const url = new URL(value); return url.protocol === 'https:' && url.hostname === 'calendly.com' && url.pathname.length > 1 && !url.pathname.includes('your-organization'); } catch { return false; }
+}
+const options = [
+  { id: 'half', title: 'Half Day', price: '$2,500', url: halfDayUrl },
+  { id: 'full', title: 'Full Day', price: '$4,500', url: fullDayUrl },
+];
+export default function CalendlyBooking() {
+  const [selectedId, setSelectedId] = useState<string | null>(() => options.find(option => isCalendlyUrl(option.url))?.id || null);
+  const selected = options.find(option => option.id === selectedId);
+  const bookingUrl = selected?.url || (isCalendlyUrl(generalUrl) ? generalUrl : options.find(option => isCalendlyUrl(option.url))?.url || '');
+  const valid = isCalendlyUrl(bookingUrl);
+  const embedUrl = valid ? new URL(bookingUrl) : null;
+  if (embedUrl) { embedUrl.searchParams.set('primary_color', '183f32'); embedUrl.searchParams.set('text_color', '34483f'); embedUrl.searchParams.set('background_color', 'ffffff'); }
+  return <div className="booking-panel"><aside className="booking-sidebar"><p className="eyebrow">Oak Mediation</p><h2>Schedule Mediation</h2><p>Choose Half Day or Full Day below, then select an available date and time in the calendar.</p><div className="booking-rates"><h3>Mediation rates</h3>{options.map(option => isCalendlyUrl(option.url) ? <button key={option.id} type="button" className={`booking-rate${selectedId === option.id ? ' is-selected' : ''}`} aria-pressed={selectedId === option.id} onClick={() => setSelectedId(option.id)}><span>{option.title}</span><strong>{option.price}</strong></button> : <div key={option.id} className="booking-rate"><span>{option.title}</span><strong>{option.price}</strong></div>)}<p className="rate-note">Select a rate to see its calendar. Availability and booking details are confirmed in Calendly.</p></div><div className="booking-help"><h3>Need help arranging a date?</h3><p>Contact Nikki Safavi</p><a href="mailto:nikki@oakmediation.com">nikki@oakmediation.com</a><a href="tel:+13233888735">Direct: (323) 388-8735</a><a href="tel:+12133782424">Office: (213) 378-2424</a></div></aside><div className="booking-calendar"><div className="calendar-toolbar"><div><span className="availability-dot" aria-hidden="true" />Calendly scheduling</div>{valid && <a href={bookingUrl} target="_blank" rel="noopener noreferrer">Open in a new tab ↗</a>}</div>{valid ? <iframe key={bookingUrl} src={embedUrl!.toString()} title={selected ? `${selected.title} mediation availability and booking` : 'Oak Mediation availability and booking'} className="booking-frame" /> : <div className="calendar-unavailable"><h3>Let’s find a date that works.</h3><p>Please contact Nikki to arrange your mediation.</p><a className="btn" href="mailto:nikki@oakmediation.com">Email Nikki</a></div>}<p className="calendar-fallback">Having trouble with the calendar? {valid && <><a href={bookingUrl} target="_blank" rel="noopener noreferrer">Book directly on Calendly</a> or </>}<a href="mailto:nikki@oakmediation.com">contact Nikki</a>.</p></div></div>;
+}

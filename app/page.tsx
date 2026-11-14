@@ -1,0 +1,14 @@
+import Image from 'next/image';
+import Link from 'next/link';
+const areas = ['Insurance disputes', 'Employment disputes', 'Workplace discrimination', 'Personal injury', 'Business disputes', 'Other complex disputes'];
+export default function Home() {
+  return <>
+    <section className="home-hero">
+      <div className="hero-copy"><p className="eyebrow">Oak Mediation &amp; Conflict Resolution</p><h1>A thoughtful path<br />toward <em>resolution.</em></h1><span className="gold-rule" /><p className="hero-description">Your dispute. Your voice. Your resolution.</p><p>Move beyond conflict through understanding, collaboration, and the freedom to shape your own way forward.</p><Link className="btn btn-light" href="/book">Book Mediation <span aria-hidden="true">↗</span></Link></div>
+      <div className="hero-portrait"><Image src="/niamh-home.webp" alt="Niamh standing beside an oak tree in autumn" fill priority sizes="(max-width: 760px) 100vw, 48vw" /><div className="portrait-caption">Experience you can trust. Resolution you can shape.</div></div>
+    </section>
+    <section className="container-site introduction section-space"><p className="eyebrow">A personal approach. A practical perspective.</p><h2>Meet Niamh</h2><span className="gold-rule" /><p className="intro-lead">The best resolutions aren’t always found in a courtroom.</p><div className="intro-columns"><p>With nearly two decades of litigation experience in state and federal courts across Massachusetts and California, Niamh brings a distinctive perspective to mediation. She understands the emotional and financial toll of prolonged litigation—and the value of finding a better way forward.</p><div><p>Her approach creates a professional, respectful space where every party can be heard, explore practical solutions, and work toward a mutually acceptable outcome.</p><Link className="text-link" href="/about">More about Niamh <span aria-hidden="true">→</span></Link></div></div></section>
+    <section className="practice-section section-space"><div className="container-site"><div className="section-heading"><div><p className="eyebrow">Clarity through conversation</p><h2>Areas of experience</h2></div><Link href="/services" className="text-link">Explore mediation <span aria-hidden="true">→</span></Link></div><div className="practice-grid">{areas.map((area, i) => <div className="practice-item" key={area}><span className="practice-number">0{i + 1}</span><h3>{area}</h3></div>)}</div></div></section>
+    <section className="closing-section section-space"><div className="container-site"><p className="eyebrow">A better way forward</p><h2>Your next chapter<br />starts with a conversation.</h2><p>Explore how mediation can help you move forward with confidence.</p><Link href="/book" className="btn btn-light">Book Mediation <span aria-hidden="true">↗</span></Link></div></section>
+  </>;
+}
