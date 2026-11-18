@@ -156,3 +156,13 @@ button.booking-rate:hover,button.booking-rate.is-selected { background:#e0e9da; 
 .booking-disclaimer { max-width:900px; margin-top:26px; font-size:12px; line-height:1.8; }
 @media (max-width:850px) { .booking-panel { grid-template-columns:1fr; } .booking-sidebar { border-right:0; border-bottom:1px solid #d5dfd5; } .booking-rates { max-width:440px; } .booking-frame { height:900px; } }
 @media (max-width:400px) { .booking-page { padding-inline:12px; } .booking-sidebar { padding:24px 18px; } .calendar-toolbar { padding:16px; } }
+.booking-panel { grid-template-columns:350px minmax(0,1fr); }
+.booking-rate { align-items:flex-start; gap:12px; }
+.rate-session,.rate-price { display:flex; flex-direction:column; }
+.rate-session { font-weight:600; }
+.rate-price { text-align:right; }
+.booking-rate small { display:block; font-size:11px; font-weight:400; line-height:1.6; margin-top:4px; }
+.additional-fees { border-top:1px solid #cbd6c5; padding-top:18px; margin-top:20px; font-size:12px; line-height:1.8; }
+.additional-fees h4 { font-size:13px; font-weight:600; margin-bottom:10px; color:var(--forest); }
+.additional-fees p + p { margin-top:12px; }
+@media (max-width:850px) { .booking-panel { grid-template-columns:1fr; } }
